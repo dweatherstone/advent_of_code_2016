@@ -41,7 +41,7 @@ pub fn result_day01_stage2(lines: &[String]) -> i32 {
             Turn::Right(val) => val,
         };
         facing = facing.next(&turn);
-        for _ in 1..=amount {
+        for _ in 0..amount {
             match facing {
                 Direction::North => north_south -= 1,
                 Direction::South => north_south += 1,
