@@ -5,15 +5,18 @@ use strum::EnumIter;
 use crate::{
     day01::{result_day01_stage1, result_day01_stage2},
     day02::{result_day02_stage1, result_day02_stage2},
+    day03::{restult_day03_stage2, result_day03_stage1},
 };
 
 pub mod day01;
 pub mod day02;
+pub mod day03;
 
 #[derive(EnumIter)]
 enum Days {
     Day01,
     Day02,
+    Day03,
 }
 
 impl Days {
@@ -22,7 +25,7 @@ impl Days {
 
         match self {
             // Standard process from input file
-            Day01 | Day02 => {
+            Day01 | Day02 | Day03 => {
                 let lines = get_lines(Path::new(&self.get_path_str()));
                 let result1 = self.get_result1_from_lines(&lines);
                 println!("{self} stage 1: {result1}");
@@ -38,6 +41,7 @@ impl Days {
         let filename = match self {
             Day01 => "day01_input.txt",
             Day02 => "day02_input.txt",
+            Day03 => "day03_input.txt",
             //_ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -48,6 +52,7 @@ impl Days {
         match self {
             Day01 => Box::new(result_day01_stage1(lines)),
             Day02 => Box::new(result_day02_stage1(lines)),
+            Day03 => Box::new(result_day03_stage1(lines)),
             //_ => panic!("undefined result 1 function")
         }
     }
@@ -57,6 +62,7 @@ impl Days {
         match self {
             Day01 => Box::new(result_day01_stage2(lines)),
             Day02 => Box::new(result_day02_stage2(lines)),
+            Day03 => Box::new(restult_day03_stage2(lines)),
             //_ => panic!("undefined result 1 function")
         }
     }
@@ -81,12 +87,13 @@ impl Display for Days {
         match self {
             Day01 => write!(f, "Day 1"),
             Day02 => write!(f, "Day 2"),
+            Day03 => write!(f, "Day 3"),
         }
     }
 }
 
 fn main() {
-    Days::Day02.run(true);
+    Days::Day03.run(true);
 }
 
 fn get_lines(path: &Path) -> Vec<String> {
