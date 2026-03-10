@@ -13,6 +13,7 @@ pub mod day01;
 pub mod day02;
 pub mod day03;
 pub mod day04;
+pub mod day05;
 
 #[derive(EnumIter)]
 enum Days {
@@ -20,22 +21,29 @@ enum Days {
     Day02,
     Day03,
     Day04,
+    Day05,
 }
 
 impl Days {
     fn get_results(&self) {
         use Days::*;
 
-        // match self {
-        //     // Standard process from input file
-        //     Day01 | Day02 | Day03 => {
-        let lines = get_lines(Path::new(&self.get_path_str()));
-        let result1 = self.get_result1_from_lines(&lines);
-        println!("{self} stage 1: {result1}");
-        let result2 = self.get_result2_from_lines(&lines);
-        println!("{self} stage 2: {result2}");
-        //     }
-        // }
+        match self {
+            Day05 => {
+                let door_id = "abbhdwsy";
+                let result1 = day05::result_day05_stage1(door_id);
+                println!("\n{self} stage 1: {result1}");
+                let result2 = day05::result_day05_stage2(door_id);
+                println!("\n{self} stage 2: {result2}");
+            }
+            _ => {
+                let lines = get_lines(Path::new(&self.get_path_str()));
+                let result1 = self.get_result1_from_lines(&lines);
+                println!("{self} stage 1: {result1}");
+                let result2 = self.get_result2_from_lines(&lines);
+                println!("{self} stage 2: {result2}");
+            }
+        }
     }
 
     fn get_path_str(&self) -> String {
@@ -46,7 +54,7 @@ impl Days {
             Day02 => "day02_input.txt",
             Day03 => "day03_input.txt",
             Day04 => "day04_input.txt",
-            //_ => panic!("undefined path string"),
+            _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
     }
@@ -58,7 +66,7 @@ impl Days {
             Day02 => Box::new(result_day02_stage1(lines)),
             Day03 => Box::new(result_day03_stage1(lines)),
             Day04 => Box::new(result_day04_stage1(lines)),
-            //_ => panic!("undefined result 1 function")
+            _ => panic!("undefined result 1 function"),
         }
     }
 
@@ -69,7 +77,7 @@ impl Days {
             Day02 => Box::new(result_day02_stage2(lines)),
             Day03 => Box::new(restult_day03_stage2(lines)),
             Day04 => Box::new(result_day04_stage2(lines)),
-            //_ => panic!("undefined result 1 function")
+            _ => panic!("undefined result 1 function"),
         }
     }
 
@@ -95,12 +103,13 @@ impl Display for Days {
             Day02 => write!(f, "Day 2"),
             Day03 => write!(f, "Day 3"),
             Day04 => write!(f, "Day 4"),
+            Day05 => write!(f, "Day 5"),
         }
     }
 }
 
 fn main() {
-    Days::Day04.run(true);
+    Days::Day05.run(true);
 }
 
 fn get_lines(path: &Path) -> Vec<String> {
