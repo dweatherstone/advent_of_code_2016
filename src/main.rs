@@ -23,6 +23,7 @@ pub mod day06;
 pub mod day07;
 pub mod day08;
 pub mod day09;
+pub mod day10;
 
 #[derive(EnumIter)]
 enum Days {
@@ -35,6 +36,7 @@ enum Days {
     Day07,
     Day08,
     Day09,
+    Day10,
 }
 
 impl Days {
@@ -47,6 +49,13 @@ impl Days {
                 let result1 = day05::result_day05_stage1(door_id);
                 println!("\n{self} stage 1: {result1}");
                 let result2 = day05::result_day05_stage2(door_id);
+                println!("\n{self} stage 2: {result2}");
+            }
+            Day10 => {
+                let lines = get_lines(Path::new(&self.get_path_str()));
+                let result1 = day10::result_day10_stage1(&lines, 17, 61);
+                println!("\n{self} stage 1: {result1}");
+                let result2 = day10::result_day10_stage2(&lines);
                 println!("\n{self} stage 2: {result2}");
             }
             // Standard processing from reading a file
@@ -72,6 +81,7 @@ impl Days {
             Day07 => "day07_input.txt",
             Day08 => "day08_input.txt",
             Day09 => "day09_input.txt",
+            Day10 => "day10_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -134,12 +144,13 @@ impl Display for Days {
             Day07 => write!(f, "Day 7"),
             Day08 => write!(f, "Day 8"),
             Day09 => write!(f, "Day 9"),
+            Day10 => write!(f, "Day 10"),
         }
     }
 }
 
 fn main() {
-    Days::Day09.run(true);
+    Days::Day10.run(true);
     // for day in Days::iter() {
     //     day.run(false);
     // }
