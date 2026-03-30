@@ -48,9 +48,9 @@ pub fn result_day10_stage2(lines: &[String]) -> u32 {
         factory.hand_off(low_val, low_to);
         factory.hand_off(high_val, high_to);
     }
-    *factory.outputs.get(&0).unwrap_or(&1)
-        * *factory.outputs.get(&1).unwrap_or(&1)
-        * *factory.outputs.get(&2).unwrap_or(&1)
+    (0..3)
+        .map(|idx| factory.outputs.get(&idx).unwrap_or(&1))
+        .product()
 }
 
 #[derive(Debug, PartialEq)]
