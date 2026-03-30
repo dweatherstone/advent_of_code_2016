@@ -15,7 +15,7 @@ pub fn result_day03_stage1(lines: &[String]) -> usize {
         .count()
 }
 
-pub fn restult_day03_stage2(lines: &[String]) -> usize {
+pub fn result_day03_stage2(lines: &[String]) -> usize {
     // let mut triangles = Vec::new();
     // for three_lines in lines.chunks_exact(3) {
     //     let mut triangle1 = Vec::new();
@@ -66,7 +66,7 @@ pub fn restult_day03_stage2(lines: &[String]) -> usize {
 }
 
 #[cfg(test)]
-mod day03 {
+mod day03_tests {
     use super::*;
 
     #[test]

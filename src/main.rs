@@ -6,7 +6,7 @@ use strum::{EnumIter, IntoEnumIterator};
 use crate::{
     day01::{result_day01_stage1, result_day01_stage2},
     day02::{result_day02_stage1, result_day02_stage2},
-    day03::{restult_day03_stage2, result_day03_stage1},
+    day03::{result_day03_stage1, result_day03_stage2},
     day04::{result_day04_stage1, result_day04_stage2},
     day06::{result_day06_stage1, result_day06_stage2},
     day07::{result_day07_stage1, result_day07_stage2},
@@ -16,6 +16,7 @@ use crate::{
     day12::{result_day12_stage1, result_day12_stage2},
     day13::{result_day13_stage1, result_day13_stage2},
     day14::{result_day14_stage1, result_day14_stage2},
+    day15::{result_day15_stage1, result_day15_stage2},
 };
 
 pub mod day01;
@@ -32,6 +33,7 @@ pub mod day11;
 pub mod day12;
 pub mod day13;
 pub mod day14;
+pub mod day15;
 
 #[derive(EnumIter)]
 enum Days {
@@ -49,6 +51,7 @@ enum Days {
     Day12,
     Day13,
     Day14,
+    Day15,
 }
 
 impl Days {
@@ -98,6 +101,7 @@ impl Days {
             Day12 => "day12_input.txt",
             Day13 => "day13_input.txt",
             Day14 => "day14_input.txt",
+            Day15 => "day15_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -118,6 +122,7 @@ impl Days {
             Day12 => Box::new(result_day12_stage1(lines)),
             Day13 => Box::new(result_day13_stage1(lines)),
             Day14 => Box::new(result_day14_stage1(lines)),
+            Day15 => Box::new(result_day15_stage1(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -127,7 +132,7 @@ impl Days {
         match self {
             Day01 => Box::new(result_day01_stage2(lines)),
             Day02 => Box::new(result_day02_stage2(lines)),
-            Day03 => Box::new(restult_day03_stage2(lines)),
+            Day03 => Box::new(result_day03_stage2(lines)),
             Day04 => Box::new(result_day04_stage2(lines)),
             Day06 => Box::new(result_day06_stage2(lines)),
             Day07 => Box::new(result_day07_stage2(lines)),
@@ -137,6 +142,7 @@ impl Days {
             Day12 => Box::new(result_day12_stage2(lines)),
             Day13 => Box::new(result_day13_stage2(lines)),
             Day14 => Box::new(result_day14_stage2(lines)),
+            Day15 => Box::new(result_day15_stage2(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -173,12 +179,13 @@ impl Display for Days {
             Day12 => write!(f, "Day 12"),
             Day13 => write!(f, "Day 13"),
             Day14 => write!(f, "Day 14"),
+            Day15 => write!(f, "Day 15"),
         }
     }
 }
 
 fn main() {
-    Days::Day14.run(true);
+    Days::Day15.run(true);
     // for day in Days::iter() {
     //     day.run(false);
     // }
