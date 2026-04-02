@@ -65,7 +65,7 @@ fn find_password(door_id: &str, is_in_order: bool) -> String {
 }
 
 #[cfg(test)]
-mod day05 {
+mod day05_tests {
     use super::*;
 
     #[test]

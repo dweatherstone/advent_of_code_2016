@@ -49,7 +49,7 @@ fn is_abba(input: &str) -> bool {
 }
 
 #[cfg(test)]
-mod day07 {
+mod day07_tests {
     use super::*;
 
     #[test]

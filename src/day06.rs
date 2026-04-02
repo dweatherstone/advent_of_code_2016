@@ -38,7 +38,7 @@ fn get_message(lines: &[String], is_max: bool) -> String {
 }
 
 #[cfg(test)]
-mod day06 {
+mod day06_tests {
     use super::*;
 
     fn get_example() -> Vec<String> {

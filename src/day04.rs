@@ -84,7 +84,7 @@ fn decrypt_name(encrypted: &str, shift: u32) -> String {
 }
 
 #[cfg(test)]
-mod day04 {
+mod day04_tests {
     use super::*;
 
     #[test]

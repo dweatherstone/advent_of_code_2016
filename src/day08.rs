@@ -78,7 +78,7 @@ fn rotate_col(column: usize, amount: usize, screen: &mut [Vec<bool>]) {
 }
 
 #[cfg(test)]
-mod day08 {
+mod day08_tests {
     use super::*;
 
     #[test]

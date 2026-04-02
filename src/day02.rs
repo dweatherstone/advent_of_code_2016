@@ -82,7 +82,7 @@ fn get_string(position: i32) -> String {
 }
 
 #[cfg(test)]
-mod day02 {
+mod day02_tests {
     use super::*;
 
     fn get_example() -> Vec<String> {

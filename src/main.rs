@@ -18,6 +18,7 @@ use crate::{
     day14::{result_day14_stage1, result_day14_stage2},
     day15::{result_day15_stage1, result_day15_stage2},
     day16::{result_day16_stage1, result_day16_stage2},
+    day17::{result_day17_stage1, result_day17_stage2},
 };
 
 pub mod day01;
@@ -36,6 +37,7 @@ pub mod day13;
 pub mod day14;
 pub mod day15;
 pub mod day16;
+pub mod day17;
 
 #[derive(EnumIter)]
 enum Days {
@@ -55,6 +57,7 @@ enum Days {
     Day14,
     Day15,
     Day16,
+    Day17,
 }
 
 impl Days {
@@ -106,6 +109,7 @@ impl Days {
             Day14 => "day14_input.txt",
             Day15 => "day15_input.txt",
             Day16 => "day16_input.txt",
+            Day17 => "day17_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -128,6 +132,7 @@ impl Days {
             Day14 => Box::new(result_day14_stage1(lines)),
             Day15 => Box::new(result_day15_stage1(lines)),
             Day16 => Box::new(result_day16_stage1(lines)),
+            Day17 => Box::new(result_day17_stage1(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -149,6 +154,7 @@ impl Days {
             Day14 => Box::new(result_day14_stage2(lines)),
             Day15 => Box::new(result_day15_stage2(lines)),
             Day16 => Box::new(result_day16_stage2(lines)),
+            Day17 => Box::new(result_day17_stage2(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -187,12 +193,13 @@ impl Display for Days {
             Day14 => write!(f, "Day 14"),
             Day15 => write!(f, "Day 15"),
             Day16 => write!(f, "Day 16"),
+            Day17 => write!(f, "Day 17"),
         }
     }
 }
 
 fn main() {
-    Days::Day16.run(true);
+    Days::Day17.run(true);
     // for day in Days::iter() {
     //     day.run(false);
     // }

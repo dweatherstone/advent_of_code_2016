@@ -92,7 +92,7 @@ impl Direction {
 }
 
 #[cfg(test)]
-mod day01 {
+mod day01_tests {
     use super::*;
 
     #[test]
