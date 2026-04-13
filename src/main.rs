@@ -20,6 +20,8 @@ use crate::{
     day16::{result_day16_stage1, result_day16_stage2},
     day17::{result_day17_stage1, result_day17_stage2},
     day18::{result_day18_stage1, result_day18_stage2},
+    day19::{result_day19_stage1, result_day19_stage2},
+    day20::{result_day20_stage1, result_day20_stage2},
 };
 
 pub mod day01;
@@ -40,6 +42,8 @@ pub mod day15;
 pub mod day16;
 pub mod day17;
 pub mod day18;
+pub mod day19;
+pub mod day20;
 
 #[derive(EnumIter)]
 enum Days {
@@ -61,6 +65,8 @@ enum Days {
     Day16,
     Day17,
     Day18,
+    Day19,
+    Day20,
 }
 
 impl Days {
@@ -114,6 +120,8 @@ impl Days {
             Day16 => "day16_input.txt",
             Day17 => "day17_input.txt",
             Day18 => "day18_input.txt",
+            Day19 => "day19_input.txt",
+            Day20 => "day20_input.txt",
             _ => panic!("undefined path string"),
         };
         format!("input/{filename}")
@@ -138,6 +146,8 @@ impl Days {
             Day16 => Box::new(result_day16_stage1(lines)),
             Day17 => Box::new(result_day17_stage1(lines)),
             Day18 => Box::new(result_day18_stage1(lines)),
+            Day19 => Box::new(result_day19_stage1(lines)),
+            Day20 => Box::new(result_day20_stage1(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -161,6 +171,8 @@ impl Days {
             Day16 => Box::new(result_day16_stage2(lines)),
             Day17 => Box::new(result_day17_stage2(lines)),
             Day18 => Box::new(result_day18_stage2(lines)),
+            Day19 => Box::new(result_day19_stage2(lines)),
+            Day20 => Box::new(result_day20_stage2(lines)),
             _ => panic!("undefined result 1 function"),
         }
     }
@@ -201,12 +213,14 @@ impl Display for Days {
             Day16 => write!(f, "Day 16"),
             Day17 => write!(f, "Day 17"),
             Day18 => write!(f, "Day 18"),
+            Day19 => write!(f, "Day 19"),
+            Day20 => write!(f, "Day 20"),
         }
     }
 }
 
 fn main() {
-    Days::Day18.run(true);
+    Days::Day20.run(true);
     // for day in Days::iter() {
     //     day.run(true);
     // }
