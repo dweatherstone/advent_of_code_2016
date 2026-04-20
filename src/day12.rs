@@ -23,35 +23,39 @@ fn parse_register(word: &str) -> usize {
     }
 }
 
-struct Program {
-    instructions: Vec<Instruction>,
-    current_idx: usize,
-    registers: [i32; 4],
+pub struct Program {
+    pub instructions: Vec<Instruction>,
+    pub current_idx: usize,
+    pub registers: [i32; 4],
 }
 
 impl Program {
-    fn parse_lines(lines: &[String]) -> Self {
+    pub fn parse_lines(lines: &[String]) -> Self {
         let mut instructions = Vec::new();
         for line in lines {
             let words: Vec<&str> = line.split_whitespace().collect();
             let instruction = match words[0] {
                 "cpy" => {
                     let x = Parameter::parse(words[1]);
-                    let y: usize = parse_register(words[2]);
+                    let y = Parameter::parse(words[2]);
                     Instruction::Cpy(x, y)
                 }
                 "inc" => {
-                    let x = parse_register(words[1]);
+                    let x = Parameter::parse(words[1]);
                     Instruction::Inc(x)
                 }
                 "dec" => {
-                    let x = parse_register(words[1]);
+                    let x = Parameter::parse(words[1]);
                     Instruction::Dec(x)
                 }
                 "jnz" => {
                     let x = Parameter::parse(words[1]);
-                    let y: isize = words[2].parse().unwrap();
+                    let y = Parameter::parse(words[2]);
                     Instruction::Jnz(x, y)
+                }
+                "tgl" => {
+                    let x = Parameter::parse(words[1]);
+                    Instruction::Tgl(x)
                 }
                 _ => panic!("unknown instruction type"),
             };
@@ -64,7 +68,7 @@ impl Program {
         }
     }
 
-    fn run(&mut self) {
+    pub fn run(&mut self) {
         let instructions_qty = self.instructions.len();
         while self.current_idx < instructions_qty {
             match self.instructions[self.current_idx] {
@@ -73,10 +77,26 @@ impl Program {
                         Parameter::Integer(value) => value,
                         Parameter::Register(idx) => self.registers[idx],
                     };
-                    self.registers[y] = new_value;
+                    let register_idx = match y {
+                        Parameter::Integer(value) => value as usize,
+                        Parameter::Register(idx) => idx,
+                    };
+                    self.registers[register_idx] = new_value;
                 }
-                Instruction::Inc(x) => self.registers[x] += 1,
-                Instruction::Dec(x) => self.registers[x] -= 1,
+                Instruction::Inc(x) => {
+                    let regesiter_idx = match x {
+                        Parameter::Integer(value) => value as usize,
+                        Parameter::Register(idx) => idx,
+                    };
+                    self.registers[regesiter_idx] += 1;
+                }
+                Instruction::Dec(x) => {
+                    let register_idx = match x {
+                        Parameter::Integer(value) => value as usize,
+                        Parameter::Register(idx) => idx,
+                    };
+                    self.registers[register_idx] -= 1;
+                }
                 Instruction::Jnz(x, y) => {
                     let x_value = match x {
                         Parameter::Integer(value) => value,
@@ -85,26 +105,32 @@ impl Program {
                     if x_value == 0 {
                         self.current_idx += 1;
                     } else {
-                        self.current_idx = self.current_idx.wrapping_add_signed(y);
+                        let y_value = match y {
+                            Parameter::Integer(value) => value as isize,
+                            Parameter::Register(idx) => self.registers[idx] as isize,
+                        };
+                        self.current_idx = self.current_idx.wrapping_add_signed(y_value);
                     }
                     continue;
                 }
+                Instruction::Tgl(x) => self.toggle_instruction(&x),
             }
             self.current_idx += 1;
         }
     }
 }
 
-#[derive(Copy, Clone)]
-enum Instruction {
-    Cpy(Parameter, usize),
-    Inc(usize),
-    Dec(usize),
-    Jnz(Parameter, isize),
+#[derive(Debug, PartialEq, Copy, Clone)]
+pub enum Instruction {
+    Cpy(Parameter, Parameter),
+    Inc(Parameter),
+    Dec(Parameter),
+    Jnz(Parameter, Parameter),
+    Tgl(Parameter),
 }
 
-#[derive(Copy, Clone)]
-enum Parameter {
+#[derive(Debug, PartialEq, Copy, Clone)]
+pub enum Parameter {
     Integer(i32),
     Register(usize), // a = 0, b = 1, c = 2, d = 3
 }
