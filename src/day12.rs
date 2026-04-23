@@ -57,6 +57,10 @@ impl Program {
                     let x = Parameter::parse(words[1]);
                     Instruction::Tgl(x)
                 }
+                "out" => {
+                    let x = Parameter::parse(words[1]);
+                    Instruction::Out(x)
+                }
                 _ => panic!("unknown instruction type"),
             };
             instructions.push(instruction);
@@ -71,52 +75,57 @@ impl Program {
     pub fn run(&mut self) {
         let instructions_qty = self.instructions.len();
         while self.current_idx < instructions_qty {
-            match self.instructions[self.current_idx] {
-                Instruction::Cpy(x, y) => {
-                    let new_value = match x {
-                        Parameter::Integer(value) => value,
-                        Parameter::Register(idx) => self.registers[idx],
-                    };
-                    let register_idx = match y {
-                        Parameter::Integer(value) => value as usize,
-                        Parameter::Register(idx) => idx,
-                    };
-                    self.registers[register_idx] = new_value;
-                }
-                Instruction::Inc(x) => {
-                    let regesiter_idx = match x {
-                        Parameter::Integer(value) => value as usize,
-                        Parameter::Register(idx) => idx,
-                    };
-                    self.registers[regesiter_idx] += 1;
-                }
-                Instruction::Dec(x) => {
-                    let register_idx = match x {
-                        Parameter::Integer(value) => value as usize,
-                        Parameter::Register(idx) => idx,
-                    };
-                    self.registers[register_idx] -= 1;
-                }
-                Instruction::Jnz(x, y) => {
-                    let x_value = match x {
-                        Parameter::Integer(value) => value,
-                        Parameter::Register(idx) => self.registers[idx],
-                    };
-                    if x_value == 0 {
-                        self.current_idx += 1;
-                    } else {
-                        let y_value = match y {
-                            Parameter::Integer(value) => value as isize,
-                            Parameter::Register(idx) => self.registers[idx] as isize,
-                        };
-                        self.current_idx = self.current_idx.wrapping_add_signed(y_value);
-                    }
-                    continue;
-                }
-                Instruction::Tgl(x) => self.toggle_instruction(&x),
-            }
-            self.current_idx += 1;
+            self.process_instruction();
         }
+    }
+
+    pub fn process_instruction(&mut self) {
+        match self.instructions[self.current_idx] {
+            Instruction::Cpy(x, y) => {
+                let new_value = match x {
+                    Parameter::Integer(value) => value,
+                    Parameter::Register(idx) => self.registers[idx],
+                };
+                let register_idx = match y {
+                    Parameter::Integer(value) => value as usize,
+                    Parameter::Register(idx) => idx,
+                };
+                self.registers[register_idx] = new_value;
+            }
+            Instruction::Inc(x) => {
+                let regesiter_idx = match x {
+                    Parameter::Integer(value) => value as usize,
+                    Parameter::Register(idx) => idx,
+                };
+                self.registers[regesiter_idx] += 1;
+            }
+            Instruction::Dec(x) => {
+                let register_idx = match x {
+                    Parameter::Integer(value) => value as usize,
+                    Parameter::Register(idx) => idx,
+                };
+                self.registers[register_idx] -= 1;
+            }
+            Instruction::Jnz(x, y) => {
+                let x_value = match x {
+                    Parameter::Integer(value) => value,
+                    Parameter::Register(idx) => self.registers[idx],
+                };
+                if x_value == 0 {
+                    self.current_idx += 1;
+                } else {
+                    let y_value = match y {
+                        Parameter::Integer(value) => value as isize,
+                        Parameter::Register(idx) => self.registers[idx] as isize,
+                    };
+                    self.current_idx = self.current_idx.wrapping_add_signed(y_value);
+                }
+                return;
+            }
+            Instruction::Tgl(x) => self.toggle_instruction(&x),
+            Instruction::Out(_) => {}
+        }
+        self.current_idx += 1;
     }
 }
 
@@ -127,6 +136,7 @@ pub enum Instruction {
     Dec(Parameter),
     Jnz(Parameter, Parameter),
     Tgl(Parameter),
+    Out(Parameter),
 }
 
 #[derive(Debug, PartialEq, Copy, Clone)]

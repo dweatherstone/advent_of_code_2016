@@ -36,6 +36,8 @@ impl Program {
             Instruction::Tgl(x) => Instruction::Inc(x),
             Instruction::Jnz(x, y) => Instruction::Cpy(x, y),
             Instruction::Cpy(x, y) => Instruction::Jnz(x, y),
+            // This is the instruction from Day 25. Hopefully it doesn't actually come up!
+            Instruction::Out(x) => Instruction::Out(x),
         };
     }
 }
